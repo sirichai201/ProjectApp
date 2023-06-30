@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset(
-                  "assets/images/R 1.png",
+                  "assets/images/ku.png",
                   width: 209,
                   height: 300,
                 ),
