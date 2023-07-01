@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Center(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(
                   "assets/images/ku.png",
