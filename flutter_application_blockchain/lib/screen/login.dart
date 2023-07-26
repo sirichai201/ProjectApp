@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_blockchain/screen/ForgotPassword.dart';
 import 'package:flutter_application_blockchain/screen/User.dart';
+
+import 'home.dart';
+
 // นำเข้าหน้าผู้ใช้งานที่กำลังจะสร้าง
 
 class LoginScreen extends StatelessWidget {
@@ -18,6 +21,7 @@ class LoginScreen extends StatelessWidget {
         if (isLogoutRequested) {
           return true;
         } else {
+          // เมื่อกดปุ่มย้อนกลับ
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -33,9 +37,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(); // ปิด AlertDialog
                       isLogoutRequested = true;
-                      Navigator.of(context).pop();
+                      Navigator.of(context)
+                          .pop(true); // คืนค่า true ให้กับ onWillPop
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HomeScreen()), // ใช้ pushReplacement เพื่อให้ HomeScreen เป็นหน้าจอแรกแทนที่หน้า LoginScreen
+                      );
                     },
                     child: Text('ออกจากระบบ'),
                   ),
