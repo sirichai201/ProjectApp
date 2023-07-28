@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_blockchain/screen/login.dart';
 
+import 'AttendanceHistoryScreen.dart';
 import 'SubjectDetailScreen.dart';
 
 class UserScreen extends StatefulWidget {
@@ -191,6 +192,13 @@ class _UserScreenState extends State<UserScreen> {
               title: 'ประวัติการเข้าเรียน',
               icon: Icons.history,
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AttendanceHistoryScreen(
+                            subject: {},
+                          )),
+                );
                 // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
               },
             ),
