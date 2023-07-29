@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_application_blockchain/screen/login.dart';
 
 import 'AttendanceHistoryScreen.dart';
+import 'Profile.dart';
 import 'SubjectDetailScreen.dart';
 
 class UserScreen extends StatefulWidget {
@@ -200,6 +202,19 @@ class _UserScreenState extends State<UserScreen> {
                           )),
                 );
                 // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _buildDrawerItem(
+              title: 'profile',
+              icon: Icons.manage_accounts,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
               },
             ),
             SizedBox(
