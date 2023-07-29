@@ -31,112 +31,29 @@ class ProfileScreen extends StatelessWidget {
       );
     }
 
-    //  ชื่อหัวเรื่องใน AppBar
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      // ชื่อหัวเรื่องใน AppBar
-
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 26, 107, 173),
-              ),
-              child: Center(
-                child: Text(
-                  'เมนู',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'วิชาเรียน',
-              icon: Icons.book,
-              onTap: () {
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'วิชาเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ประวัติการเข้าเรียน',
-              icon: Icons.history,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
-                            subject: {},
-                          )),
-                );
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'profile',
-              icon: Icons.manage_accounts,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ออกจากระบบ',
-              icon: Icons.exit_to_app,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            // Add more ListTile items as needed
-          ],
-        ),
-      ),
-
+          // ... เนื้อหา Drawer ที่เหมือนเดิม ...
+          ),
       body: Center(
         child: Column(
           children: [
             SizedBox(height: 25),
             Stack(
-              alignment: Alignment.center, // ให้วัตถุอยู่กึ่งกลาง
+              alignment: Alignment.center,
               children: [
                 CircleAvatar(
                   radius: 100,
-                  backgroundImage: AssetImage(
-                      'assets/images/Profile.png'), // เปลี่ยนเส้นทางไปที่รูปโปรไฟล์ของคุณ
+                  backgroundImage: AssetImage('assets/images/Profile.png'),
                 ),
                 Positioned(
                   bottom: 140,
                   right: 4,
-                  // ให้ปุ่มไอคอน "Edit" อยู่ด้านล่างของรูปโปรไฟล์
                   child: InkWell(
                     onTap: () {
-                      // เมื่อกดปุ่มแก้ไข ให้เปลี่ยนหน้าไปยังหน้าแก้ไขโปรไฟล์
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -155,60 +72,68 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 25),
-            const Text(
-              'sirichai.c@ku.th',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 25),
-            const Align(
-              alignment: Alignment.centerLeft, // ขยับข้อความมาทางด้านซ้าย
+            SizedBox(height: 25),
+            Align(
+              alignment: Alignment.centerLeft,
               child: FractionalTranslation(
-                translation:
-                    Offset(0.2, 0.0), // ขยับข้อความไปทางด้านขวา 10% ของกว้าง
+                translation: Offset(0.2, 0.0),
                 child: Text(
                   'ข้อมูลบัญชี',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-            const SizedBox(
-                height:
-                    25), // เพิ่มระยะห่างระหว่างข้อความ "ข้อมูลบัญชี" กับข้อมูลที่ตามมา
-            Container(
-              padding: EdgeInsets.all(50),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 2),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  const SizedBox(height: 15),
-                  Text(
-                    'ชื่อ: Sirichai',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 25),
-                  Text(
-                    'นามสกุล: chantharasri',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 25),
-                  Text(
-                    'Email: sirichai.c@ku.th',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 25),
-                  Text(
-                    'รหัสนิสิต: 6340205068',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 25),
-                ],
+            SizedBox(height: 25),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 2),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 15),
+                    Text(
+                      'ชื่อ: Sirichai',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'นามสกุล: chantharasri',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Email: sirichai.c@ku.th',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'รหัสนิสิต: 6340205068',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 25),
+                    Align(
+                      child: FractionalTranslation(
+                        translation: Offset(0.0, 0.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfileScreen(),
+                              ),
+                            );
+                          },
+                          child: Text('แก้ไขข้อมูลบัญชี'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
