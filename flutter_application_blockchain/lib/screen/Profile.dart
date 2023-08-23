@@ -112,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'รหัสนิสิต: 6340205068',
+                      'รหัสนิสิต: 63402050682222',
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 25),
