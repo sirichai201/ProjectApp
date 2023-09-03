@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen/login.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/login.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});

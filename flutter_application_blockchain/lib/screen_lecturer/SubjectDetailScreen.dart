@@ -1,85 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_application_blockchain/screen/User.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/AttendanceHistoryScreen.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/User.dart';
 
 import 'login.dart';
 
-class AttendanceHistoryScreen extends StatefulWidget {
+class SubjectDetailScreen extends StatefulWidget {
   final Map<String, String> subject;
 
-  AttendanceHistoryScreen({required this.subject});
+  SubjectDetailScreen({required this.subject});
 
   @override
-  _AttendanceHistoryScreenState createState() =>
-      _AttendanceHistoryScreenState();
+  _SubjectDetailScreenState createState() => _SubjectDetailScreenState();
 }
 
-class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
+class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   DateTime? selectedDate;
   String selectedDateText = "เลือกวันที่";
 
-  // สร้าง List สำหรับเก็บรายชื่อวิชา
-  List<String> subjectList = [
-    'วิชา 1',
-    'วิชา 2',
-    'วิชา 3',
-    'วิชา 11',
-    'วิชา 21'
-  ];
+  // ตัวแปรสำหรับเก็บเวลาเปิดปิดในการเช็คชื่อ
+  TimeOfDay? openTime;
+  TimeOfDay? closeTime;
 
-  // ตัวแปรสำหรับควบคุมการแสดงรายชื่อวิชาที่ค้นหา
-  List<String> filteredSubjectList = [];
+  bool isToggleOn = false;
 
-  // ตัวแปรสำหรับเก็บข้อมูลการค้นหา
-  String searchText = '';
-//ปุ่มกากออก
-  TextEditingController searchController = TextEditingController();
-
-  // ฟังก์ชันค้นหาวิชา
-  void searchSubject(String query) {
+  void _toggleSwitch(bool value) {
     setState(() {
-      filteredSubjectList = subjectList
-          .where(
-              (subject) => subject.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      isToggleOn = value;
     });
-  }
-
-  Widget _buildSearchBox() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      child: TextField(
-        onChanged: (query) => searchSubject(query),
-        decoration: InputDecoration(
-          hintText: 'ค้นหาวิชา...',
-          prefixIcon: Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSubjectList() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: filteredSubjectList.length,
-        itemBuilder: (context, index) {
-          final subject = filteredSubjectList[index];
-          return ListTile(
-            title: Text(subject),
-            // จัดการเมื่อกดที่รายชื่อวิชา
-            onTap: () {
-              // อาจจะเพิ่มโค้ดเมื่อผู้ใช้คลิกที่รายชื่อวิชา
-            },
-          );
-        },
-      ),
-    );
   }
 
   Widget _buildDrawerItem({
@@ -108,7 +56,10 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ประวัติการเข้าเรียน "),
+        title: Text(
+          '${widget.subject['name']} (${widget.subject['code']})' ??
+              'รายละเอียดรายวิชา',
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -149,6 +100,14 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
               title: 'ประวัติการเข้าเรียน',
               icon: Icons.history,
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AttendanceHistoryScreen(
+                            subject: {},
+                          )),
+                );
+
                 // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
               },
             ),
@@ -203,11 +162,65 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                   ),
                 ),
 
-                SizedBox(height: 100),
-
-                _buildSearchBox(), // เพิ่ม Search Box
                 SizedBox(height: 20),
-                _buildSubjectList(), // เพิ่มรายการวิชาที่ค้นหา
+
+                SizedBox(height: 20),
+
+                // ช่องสำหรับรหัสเชิญเข้าชั้นเรียน
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text("  รหัสเชิญ 12332154"),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20),
+
+                SizedBox(height: 20),
+                Container(
+                  width: 250,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // ปุ่มเลือกเวลา
+                      IconButton(
+                        icon: Icon(Icons.timer),
+                        onPressed: () => _selectTime(context),
+                      ),
+                      SizedBox(width: 15),
+
+                      // ช่องแสดงเวลาเปิดปิด
+                      Expanded(
+                        child: Text(
+                          "${openTime?.format(context) ?? 'เวลาเริ่มต้น'} - ${closeTime?.format(context) ?? 'เวลาสิ้นสุด'}",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                      // เปิดปิด เวลา สำหรับ ไว้เช็คชื่อ
+                      Switch(
+                        value: isToggleOn,
+                        onChanged: _toggleSwitch,
+                      ),
+                    ],
+                  ),
+                ),
 
                 const SizedBox(height: 30),
                 const Padding(
@@ -311,6 +324,28 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
         selectedDateText =
             "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
       });
+    }
+  }
+
+  // ฟังก์ชันเลือกเวลา
+  Future<void> _selectTime(BuildContext context) async {
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime != null) {
+      if (openTime == null) {
+        // เลือกเวลาเริ่มต้นครั้งแรก
+        setState(() {
+          openTime = selectedTime;
+        });
+      } else {
+        // เลือกเวลาสิ้นสุดครั้งที่สอง
+        setState(() {
+          closeTime = selectedTime;
+        });
+      }
     }
   }
 }

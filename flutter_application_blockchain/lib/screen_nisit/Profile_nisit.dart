@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen/EditProfile.dart';
 
-import 'AttendanceHistoryScreen.dart';
-import 'login.dart';
+import '../screen_lecturer/AttendanceHistoryScreen.dart';
+import '../screen_lecturer/EditProfile.dart';
+import '../screen_lecturer/login.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class Profile_nisitScreen extends StatelessWidget {
+  const Profile_nisitScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,88 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Profile_nisit'),
       ),
       drawer: Drawer(
-          // ... เนื้อหา Drawer ที่เหมือนเดิม ...
-          ),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 26, 107, 173),
+              ),
+              child: Center(
+                child: Text(
+                  'เมนู',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _buildDrawerItem(
+              title: 'วิชาเรียน',
+              icon: Icons.book,
+              onTap: () {
+                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'วิชาเรียน'
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _buildDrawerItem(
+              title: 'ประวัติการเข้าเรียน',
+              icon: Icons.history,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AttendanceHistoryScreen(
+                            subject: {},
+                          )),
+                );
+                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _buildDrawerItem(
+              title: 'profile_nisit',
+              icon: Icons.manage_accounts,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Profile_nisitScreen()),
+                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _buildDrawerItem(
+              title: 'ออกจากระบบ',
+              icon: Icons.exit_to_app,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            // Add more ListTile items as needed
+          ],
+        ),
+      ),
       body: Center(
         child: Column(
           children: [

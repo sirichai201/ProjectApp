@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_application_blockchain/screen/login.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/login.dart';
+import 'package:flutter_application_blockchain/screen_nisit/SubjectDetail_nisit_Screen.dart';
 
-import 'AttendanceHistoryScreen.dart';
-import 'Profile.dart';
-import 'SubjectDetailScreen.dart';
+import '../screen_lecturer/AttendanceHistoryScreen.dart';
+import '../screen_lecturer/SubjectDetailScreen.dart';
+import 'Profile_nisit.dart';
 
-class UserScreen extends StatefulWidget {
+class UserScreen_nisit extends StatefulWidget {
   @override
-  _UserScreenState createState() => _UserScreenState();
+  _UserScreen_nisitState createState() => _UserScreen_nisitState();
 }
 
-class _UserScreenState extends State<UserScreen> {
+class _UserScreen_nisitState extends State<UserScreen_nisit> {
   List<Map<String, String>> subjects = [
-    {'code': '000011111', 'name': 'วิชาAAA', 'group': '2'},
-    {'code': '000011111', 'name': 'วิชาที่BBB', 'group': '1'},
-    {'code': '000011111', 'name': 'วิชาที่CCC', 'group': '3'},
+    {'code': '01111', 'name': 'วิชาAAA', 'group': '2'},
+    {'code': '222', 'name': 'วิชาที่BBB', 'group': '1'},
+    {'code': '03333', 'name': 'วิชาที่CCC', 'group': '3'},
   ];
 
   Future<bool?> _showDeleteConfirmationDialog(BuildContext context, int index) {
@@ -148,7 +149,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User'),
+        title: Text('User_nisit'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -208,12 +209,13 @@ class _UserScreenState extends State<UserScreen> {
               height: 20,
             ),
             _buildDrawerItem(
-              title: 'profile',
+              title: 'profile_nisit',
               icon: Icons.manage_accounts,
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => Profile_nisitScreen()),
                 ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
               },
             ),
@@ -252,7 +254,7 @@ class _UserScreenState extends State<UserScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            SubjectDetailScreen(subject: subject),
+                            SubjectDetail_nisitScreen(subject: subject),
                       ),
                     );
                   },

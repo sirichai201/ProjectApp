@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen/home.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/home.dart';
 
 void main() {
   runApp(const MyApp());
