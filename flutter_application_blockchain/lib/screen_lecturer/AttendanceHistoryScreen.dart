@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/User.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 
 import 'login.dart';
 
@@ -138,7 +138,8 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => UserScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => User_lecturerScreen()),
                 );
               },
             ),

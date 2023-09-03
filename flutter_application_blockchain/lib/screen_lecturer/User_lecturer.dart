@@ -7,12 +7,12 @@ import 'AttendanceHistoryScreen.dart';
 import 'Profile.dart';
 import 'SubjectDetailScreen.dart';
 
-class UserScreen extends StatefulWidget {
+class User_lecturerScreen extends StatefulWidget {
   @override
-  _UserScreenState createState() => _UserScreenState();
+  _User_lecturerScreenState createState() => _User_lecturerScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
+class _User_lecturerScreenState extends State<User_lecturerScreen> {
   List<Map<String, String>> subjects = [
     {'code': '000011111', 'name': 'วิชาAAA', 'group': '2'},
     {'code': '000011111', 'name': 'วิชาที่BBB', 'group': '1'},

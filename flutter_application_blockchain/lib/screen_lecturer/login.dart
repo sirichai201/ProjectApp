@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/ForgotPassword.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/User.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 
 import 'home.dart';
@@ -94,7 +94,8 @@ class LoginScreen extends StatelessWidget {
                   // เปลี่ยนไปยังหน้าผู้ใช้งานที่กำลังจะสร้าง
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UserScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => User_lecturerScreen()),
                   );
                 },
                 child: Container(
