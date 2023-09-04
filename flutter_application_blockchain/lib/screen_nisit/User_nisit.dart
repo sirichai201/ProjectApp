@@ -20,6 +20,8 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
     {'code': '03333', 'name': 'วิชาที่CCC', 'group': '3'},
   ];
 
+  String? joinedSubjectCode; // Variable to store the joined subject code
+
   Future<bool?> _showDeleteConfirmationDialog(BuildContext context, int index) {
     return showDialog<bool>(
       context: context,
@@ -51,10 +53,8 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
       width: MediaQuery.of(context).size.width * 0.7,
       margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
       decoration: BoxDecoration(
-        border:
-            Border.all(color: Colors.grey, width: 2), // กำหนดเส้นโครงของกรอบ
-        borderRadius: BorderRadius.circular(
-            10.0), // กำหนดขอบเส้นโครงเป็นรูปสี่เหลี่ยมเหลี่ยม
+        border: Border.all(color: Colors.grey, width: 2),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: ListTile(
         leading: Icon(icon),
@@ -64,72 +64,58 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
     );
   }
 
-  void _addSubject() {
+  void _showJoinClassDialog() {
     TextEditingController codeController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController groupController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("เพิ่มรายการวิชาใหม่"),
+          title: Text("Join a Class"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(
+                "You are currently signed in with email:",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "sirichai.c@ku.th", // Replace with the user's email
+                style: TextStyle(color: Colors.blue),
+              ),
+              SizedBox(height: 20),
               TextField(
                 controller: codeController,
-                decoration: InputDecoration(labelText: "รหัสวิชา"),
+                decoration: InputDecoration(labelText: "Enter Class Code"),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[ก-๙a-zA-Z0-9]')),
-                ],
-              ),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(labelText: "ชื่อรายวิชา"),
-                keyboardType: TextInputType.text,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[ก-๙a-zA-Z0-9]')),
-                ],
-              ),
-              TextField(
-                controller: groupController,
-                decoration: InputDecoration(labelText: "หมู่เรียน"),
-                keyboardType: TextInputType.text,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[ก-๙a-zA-Z0-9]')),
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
               ),
             ],
           ),
           actions: [
             TextButton(
-              child: Text("ยกเลิก"),
+              child: Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: Text("เพิ่ม"),
+            ElevatedButton(
+              child: Text("Join Class"),
               onPressed: () {
-                String newCode = codeController.text.trim();
-                String newName = nameController.text.trim();
-                String newGroup = groupController.text.trim();
-
-                if (newCode.isNotEmpty &&
-                    newName.isNotEmpty &&
-                    newGroup.isNotEmpty &&
-                    !_subjectExists(newCode, newGroup)) {
+                String classCode = codeController.text.trim();
+                // Check if class code is valid and join the class if needed
+                // Replace this with your logic to verify and join the class
+                if (isValidClassCode(classCode)) {
                   setState(() {
-                    subjects.add(
-                        {'code': newCode, 'name': newName, 'group': newGroup});
+                    joinedSubjectCode = classCode;
                   });
                   Navigator.of(context).pop();
+                  _showJoinSuccessDialog(); // เรียกใช้ฟังก์ชันแสดงข้อความเมื่อสำเร็จ
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                        'กรุณากรอกรหัสวิชาและหมู่เรียนที่ไม่ซ้ำกันและไม่เป็นค่าว่าง'),
+                    content: Text('Invalid class code.'),
                   ));
                 }
               },
@@ -140,9 +126,30 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
     );
   }
 
-  bool _subjectExists(String code, String group) {
-    return subjects
-        .any((subject) => subject['code'] == code && subject['group'] == group);
+  void _showJoinSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Join Class Successful"),
+          content: Text("You have successfully joined the class!"),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  bool isValidClassCode(String classCode) {
+    // Replace with your logic to validate the class code
+    // Return true if it's a valid class code, otherwise, return false
+    return true;
   }
 
   @override
@@ -154,7 +161,13 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              _addSubject(); // สร้างฟังก์ชัน _addSubject() ที่จะถูกเรียกเมื่อกดปุ่ม
+              if (joinedSubjectCode == null) {
+                _showJoinClassDialog();
+              } else {
+                // Handle navigation or display message for already joined class
+                // For example, navigate to the subject detail screen for the joined subject
+                // Or show a message that the user is already in a class
+              }
             },
           ),
         ],
@@ -185,7 +198,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
               title: 'วิชาเรียน',
               icon: Icons.book,
               onTap: () {
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'วิชาเรียน'
+                // Add your code here when clicking on 'วิชาเรียน'
               },
             ),
             SizedBox(
@@ -198,11 +211,12 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
-                            subject: {},
-                          )),
+                    builder: (context) => AttendanceHistoryScreen(
+                      subject: {},
+                    ),
+                  ),
                 );
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
+                // Add your code here when clicking on 'ประวัติการเข้าเรียน'
               },
             ),
             SizedBox(
@@ -215,8 +229,9 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Profile_nisitScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
+                    builder: (context) => Profile_nisitScreen(),
+                  ),
+                );
               },
             ),
             SizedBox(
@@ -228,21 +243,22 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
               },
             ),
             SizedBox(
               height: 20,
             ),
-            // Add more ListTile items as needed
           ],
         ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 80), // ระยะห่างระหว่างข้อความและรายวิชา
+          SizedBox(height: 80),
           Expanded(
             child: ListView.builder(
               itemCount: subjects.length,
@@ -253,8 +269,9 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            SubjectDetail_nisitScreen(subject: subject),
+                        builder: (context) => SubjectDetail_nisitScreen(
+                          subject: subject,
+                        ),
                       ),
                     );
                   },
@@ -265,7 +282,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                         margin: const EdgeInsets.only(
                             top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
                         decoration: BoxDecoration(
-                          color: Colors.grey[300], // สีเทาสำหรับกรอบรายวิชา
+                          color: Colors.grey[300],
                           borderRadius: BorderRadius.circular(60.0),
                         ),
                         child: Row(
@@ -274,8 +291,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                             Text(
                               ' ${index + 1}',
                               style: TextStyle(
-                                color:
-                                    Colors.green, // สีเขียวสำหรับเลขลำดับวิชา
+                                color: Colors.green,
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -325,8 +341,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                          height: 20), // ระยะห่างระหว่างกรอบรายวิชาแต่ละรายการ
+                      const SizedBox(height: 20),
                     ],
                   ),
                 );
