@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/ForgotPassword.dart';
+import 'package:flutter_application_blockchain/login_User_All/ForgotPassword.dart';
+
 import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_application_blockchain/screen_lecturer/login.dart';
-
+import '../login_User_All/login.dart';
 import 'AttendanceHistoryScreen.dart';
 import 'Profile.dart';
 import 'SubjectDetailScreen.dart';
@@ -148,7 +147,7 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User'),
+        title: Text('User_lecturer'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),

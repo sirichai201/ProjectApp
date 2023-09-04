@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter_application_blockchain/screen_lecturer/ResetPassword.dart';
+
+
+import 'ResetPassword.dart';
 
 class OTPScreen extends StatefulWidget {
   final TextEditingController _otpController = TextEditingController();

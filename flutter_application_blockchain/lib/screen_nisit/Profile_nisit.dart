@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../login_User_All/login.dart';
 import '../screen_lecturer/AttendanceHistoryScreen.dart';
 import '../screen_lecturer/EditProfile.dart';
-import '../screen_lecturer/login.dart';
 
 class Profile_nisitScreen extends StatelessWidget {
   const Profile_nisitScreen({Key? key}) : super(key: key);

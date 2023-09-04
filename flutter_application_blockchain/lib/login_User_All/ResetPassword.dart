@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/login.dart';
+
+import 'login.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final TextEditingController _passwordController = TextEditingController();

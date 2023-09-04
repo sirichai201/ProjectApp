@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_application_blockchain/screen_lecturer/login.dart';
 import 'package:flutter_application_blockchain/screen_nisit/SubjectDetail_nisit_Screen.dart';
 
+import '../login_User_All/login.dart';
 import '../screen_lecturer/AttendanceHistoryScreen.dart';
 import '../screen_lecturer/SubjectDetailScreen.dart';
 import 'Profile_nisit.dart';

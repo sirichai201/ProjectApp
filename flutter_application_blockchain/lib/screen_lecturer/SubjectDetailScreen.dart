@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/AttendanceHistoryScreen.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 
-import 'login.dart';
+import '../login_User_All/login.dart';
 
 class SubjectDetailScreen extends StatefulWidget {
   final Map<String, String> subject;

@@ -4,7 +4,7 @@ import 'package:flutter_application_blockchain/screen_lecturer/AttendanceHistory
 import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 
-import '../screen_lecturer/login.dart';
+import '../login_User_All/login.dart';
 
 class SubjectDetail_nisitScreen extends StatefulWidget {
   final Map<String, String> subject;
