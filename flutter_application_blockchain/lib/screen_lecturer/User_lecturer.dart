@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../login_User_All/login.dart';
 import 'AttendanceHistoryScreen.dart';
 import 'Profile.dart';
-import 'SubjectDetailScreen.dart';
+import 'SubjectDetail_lecturer_Screen.dart';
 
 class User_lecturerScreen extends StatefulWidget {
   @override

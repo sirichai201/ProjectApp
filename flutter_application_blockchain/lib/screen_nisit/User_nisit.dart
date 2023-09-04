@@ -5,7 +5,7 @@ import 'package:flutter_application_blockchain/screen_nisit/SubjectDetail_nisit_
 
 import '../login_User_All/login.dart';
 import '../screen_lecturer/AttendanceHistoryScreen.dart';
-import '../screen_lecturer/SubjectDetailScreen.dart';
+
 import 'Profile_nisit.dart';
 
 class UserScreen_nisit extends StatefulWidget {
