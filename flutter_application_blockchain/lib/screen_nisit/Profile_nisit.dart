@@ -1,11 +1,28 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
+import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 
 import '../login_User_All/login.dart';
-import '../screen_lecturer/AttendanceHistoryScreen.dart';
-import '../screen_lecturer/EditProfile.dart';
 
-class Profile_nisitScreen extends StatelessWidget {
-  const Profile_nisitScreen({Key? key}) : super(key: key);
+import 'Editprofile_nisit.dart';
+
+class Profile_nisitScreen extends StatefulWidget {
+  @override
+  _Profile_nisitScreenState createState() => _Profile_nisitScreenState();
+}
+
+class _Profile_nisitScreenState extends State<Profile_nisitScreen> {
+  File? _selectedImage;
+
+  // สร้างตัวแปร _nisitUserData สำหรับข้อมูลของนิสิต
+  Map<String, dynamic> _nisitUserData = {
+    'name': 'Sirichai',
+    'lastName': 'chantharasri',
+    'email': 'sirichai.c@ku.th',
+    'studentId': '63402050682222',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +78,10 @@ class Profile_nisitScreen extends StatelessWidget {
               title: 'วิชาเรียน',
               icon: Icons.book,
               onTap: () {
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'วิชาเรียน'
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserScreen_nisit()),
+                );
               },
             ),
             SizedBox(
@@ -74,11 +94,8 @@ class Profile_nisitScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
-                            subject: {},
-                          )),
+                      builder: (context) => History_class_nisit_Screen()),
                 );
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
               },
             ),
             SizedBox(
@@ -105,16 +122,16 @@ class Profile_nisitScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
+                );
               },
             ),
             SizedBox(
               height: 20,
             ),
-            // Add more ListTile items as needed
           ],
         ),
       ),
+      // ... (other widgets like Drawer)
       body: Center(
         child: Column(
           children: [
@@ -124,18 +141,31 @@ class Profile_nisitScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 100,
-                  backgroundImage: AssetImage('assets/images/Profile.png'),
+                  backgroundImage: _selectedImage != null
+                      ? FileImage(_selectedImage!)
+                      : AssetImage('assets/images/Profile.png'),
                 ),
                 Positioned(
                   bottom: 140,
                   right: 4,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async {
+                      final updatedData = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditProfileScreen()),
+                          builder: (context) => EditProfile_nisitScreen(
+                            userData: _nisitUserData,
+                          ),
+                        ),
                       );
+                      if (updatedData != null) {
+                        setState(() {
+                          _nisitUserData = updatedData;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('แก้ไขสำเร็จ')),
+                        );
+                      }
                     },
                     child: Container(
                       padding: EdgeInsets.all(8),
@@ -174,36 +204,47 @@ class Profile_nisitScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 15),
                     Text(
-                      'ชื่อ: Sirichai',
+                      'ชื่อ: ${_nisitUserData['name']}',
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'นามสกุล: chantharasri',
+                      'นามสกุล: ${_nisitUserData['lastName']}',
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Email: sirichai.c@ku.th',
+                      'Email: ${_nisitUserData['email']}',
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'รหัสนิสิต: 63402050682222',
+                      'รหัสนิสิต: ${_nisitUserData['studentId']}',
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 25),
+                    // ... (Here you can add any other widgets you'd like)
                     Align(
                       child: FractionalTranslation(
                         translation: Offset(0.0, 0.0),
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
+                          onPressed: () async {
+                            final updatedData = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditProfileScreen(),
+                                builder: (context) => EditProfile_nisitScreen(
+                                  userData: _nisitUserData,
+                                ),
                               ),
                             );
+                            if (updatedData != null) {
+                              setState(() {
+                                _nisitUserData = updatedData;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('แก้ไขสำเร็จ')),
+                              );
+                            }
                           },
                           child: Text('แก้ไขข้อมูลบัญชี'),
                         ),

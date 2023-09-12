@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/AttendanceHistoryScreen.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 import '../login_User_All/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Profile_nisit.dart';
 
 class SubjectDetail_nisitScreen extends StatefulWidget {
   final Map<String, String> subject;
@@ -434,10 +437,22 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
-                            subject: {},
-                          )),
+                      builder: (context) => History_class_nisit_Screen()),
                 );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _buildDrawerItem(
+              title: 'profile_nisit',
+              icon: Icons.manage_accounts,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Profile_nisitScreen()),
+                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
               },
             ),
             SizedBox(

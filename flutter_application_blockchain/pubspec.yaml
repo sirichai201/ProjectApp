@@ -40,7 +40,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   fl_chart: ^0.40.0
-  image_picker: ^1.0.4
+ 
+  image_picker: ^0.8.4+3  # โปรดตรวจสอบรุ่นล่าสุดใน pub.dev
+  path_provider: ^2.0.5  # โปรดตรวจสอบรุ่นล่าสุดใน pub.dev
   google_maps_flutter: ^2.0.9
   shared_preferences: ^2.0.8
 

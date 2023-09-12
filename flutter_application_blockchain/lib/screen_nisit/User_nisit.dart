@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
 
 import 'package:flutter_application_blockchain/screen_nisit/SubjectDetail_nisit_Screen.dart';
 
@@ -211,9 +212,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AttendanceHistoryScreen(
-                      subject: {},
-                    ),
+                    builder: (context) => History_class_nisit_Screen(),
                   ),
                 );
                 // Add your code here when clicking on 'ประวัติการเข้าเรียน'

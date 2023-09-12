@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Profile อาจารย์'),
       ),
       drawer: Drawer(
         child: ListView(

@@ -17,6 +17,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   String? _selectedFileName;
 
+  String? _imagePath;
+
   @override
   void initState() {
     super.initState();
@@ -91,7 +93,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('แก้ไขข้อมูลบัญชี'),
+        title: Text('แก้ไขข้อมูลบัญชีอาจารย์'),
       ),
       body: SingleChildScrollView(
         child: Padding(

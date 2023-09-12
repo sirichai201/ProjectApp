@@ -108,7 +108,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ประวัติการเข้าเรียน "),
+        title: Text("ประวัติการเข้าเรียนของอาจารย์"),
       ),
       drawer: Drawer(
         child: ListView(
