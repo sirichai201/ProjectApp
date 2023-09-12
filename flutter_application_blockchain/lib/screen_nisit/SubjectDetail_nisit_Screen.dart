@@ -53,7 +53,13 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
     );
   }
 
-//สร้างฟังก์ชันเพื่อแสดง DatePicker:
+  Future<void> _clearCheckInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('checkedIn_${widget.subject['code']}');
+    await prefs.remove('lastCheckInDateTime_${widget.subject['code']}');
+    await prefs.remove('checkInDate_${widget.subject['code']}');
+  }
+
   Future<void> _showDatePicker() async {
     final selectedDate = await showDatePicker(
       context: context,
@@ -64,6 +70,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
 
     if (selectedDate != null) {
       // ตรวจสอบว่าผู้ใช้เลือกวันที่หรือยกเลิก
+      _clearCheckInStatus(); // ล้างสถานะการเช็คอินก่อนเก็บวันที่ใหม่
       _setCheckInDate(selectedDate); // เรียกฟังก์ชันเพื่อเก็บวันที่เช็คชื่อ
       setState(() {
         // อัปเดต UI ด้วยการเรียก setState
@@ -229,8 +236,8 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
           actions: [
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(); // ปิด Dialog นี้
-                Navigator.of(context).pop(); // ปิดหน้าจอการ Check-In
+                Navigator.of(context).pop(); // ปิดหน้าต่างเช็คอิน
+                _checkAndShowCheckInStatus(); // แสดงสถานะการเช็คอิน
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
@@ -243,65 +250,24 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
     );
   }
 
-  //สร้างฟังก์ชันเพื่อบันทึกสถานะ Check In:
-  Future<void> _saveCheckInStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('checkedIn_${widget.subject['code']}',
-        true); // บันทึกสถานะ Check-In เป็น true
-  }
-
-  //สร้างฟังก์ชันเพื่อตรวจสอบสถานะการ Check In และแสดงข้อความ:
-  //ใน _checkAndShowCheckInStatus() เพิ่มเงื่อนไขเพื่อตรวจสอบว่าได้ Check-In ในวันเดียวกันหรือไม่:
-  // ฟังก์ชันเพื่อตรวจสอบสถานะการ Check-In และแสดงข้อความ:
-  // แก้ไขและเพิ่มเงื่อนไขตรวจสอบสถานะ Check-In ใน _checkAndShowCheckInStatus
-  Future<void> _checkAndShowCheckInStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool checkedIn =
-        prefs.getBool('checkedIn_${widget.subject['code']}') ?? false;
-    String lastCheckInDateTime =
-        prefs.getString('lastCheckInDateTime_${widget.subject['code']}') ??
-            'ยังไม่เคย Check-In';
-    String checkInDate =
-        prefs.getString('checkInDate_${widget.subject['code']}') ??
-            'ยังไม่ได้กำหนดวันที่เช็คชื่อ';
-
-    setState(() {
-      this.checkInDate = checkInDate; // อัปเดตค่า checkInDate ใน State
-    });
-
-    if (checkedIn) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('คุณได้ Check In ไปแล้ว'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('คุณไม่สามารถ Check In ซ้ำได้อีก'),
-                Text(
-                    'วันที่และเวลาของการ Check-In ล่าสุด: $lastCheckInDateTime'),
-                Text('วันที่ที่เช็คชื่อ: $checkInDate'),
-              ],
+  void _showAlreadyCheckedInDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('เช็คอินแล้ว!'),
+          content: Text('คุณได้ทำการเช็คอินในวันนี้ไปแล้ว.'),
+          actions: [
+            TextButton(
+              child: Text('ตกลง'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                ),
-                child: Text('ตกลง'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      _showCheckInDialog();
-    }
+          ],
+        );
+      },
+    );
   }
 
   void _showCheckInDialog() {
@@ -356,6 +322,66 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
         );
       },
     );
+  }
+
+  //สร้างฟังก์ชันเพื่อบันทึกสถานะ Check In:
+  Future<void> _saveCheckInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('checkedIn_${widget.subject['code']}',
+        true); // บันทึกสถานะ Check-In เป็น true
+  }
+
+  //สร้างฟังก์ชันเพื่อตรวจสอบสถานะการ Check In และแสดงข้อความ:
+  //ใน _checkAndShowCheckInStatus() เพิ่มเงื่อนไขเพื่อตรวจสอบว่าได้ Check-In ในวันเดียวกันหรือไม่:
+  // ฟังก์ชันเพื่อตรวจสอบสถานะการ Check-In และแสดงข้อความ:
+  // แก้ไขและเพิ่มเงื่อนไขตรวจสอบสถานะ Check-In ใน _checkAndShowCheckInStatus
+  Future<void> _checkAndShowCheckInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // แสดงค่าเพื่อ debug
+    print("Checking for subject code: ${widget.subject['code']}");
+    bool checkedIn =
+        prefs.getBool('checkedIn_${widget.subject['code']}') ?? false;
+
+    String lastCheckInDateTimeStr =
+        prefs.getString('lastCheckInDateTime_${widget.subject['code']}') ??
+            'ยังไม่เคย Check-In';
+
+    DateTime? lastCheckInDateTime;
+    if (lastCheckInDateTimeStr != 'ยังไม่เคย Check-In') {
+      try {
+        lastCheckInDateTime = DateTime.parse(lastCheckInDateTimeStr);
+      } catch (e) {
+        print("Error parsing last check-in date: $e");
+      }
+    }
+
+    String checkInDateStr =
+        prefs.getString('checkInDate_${widget.subject['code']}') ??
+            'ยังไม่ได้กำหนดวันที่เช็คชื่อ';
+    DateTime? selectedCheckInDate;
+    if (checkInDateStr != 'ยังไม่ได้กำหนดวันที่เช็คชื่อ') {
+      try {
+        selectedCheckInDate = DateTime.parse(checkInDateStr);
+      } catch (e) {
+        print("Error parsing selected check-in date: $e");
+      }
+    }
+
+    setState(() {
+      this.checkInDate = checkInDateStr;
+    });
+
+    if (checkedIn &&
+        lastCheckInDateTime != null &&
+        selectedCheckInDate != null &&
+        lastCheckInDateTime.day == selectedCheckInDate.day &&
+        lastCheckInDateTime.month == selectedCheckInDate.month &&
+        lastCheckInDateTime.year == selectedCheckInDate.year) {
+      // ถ้าเช็คอินแล้วในวันที่เดียวกันกับที่เลือก
+      _showAlreadyCheckedInDialog(); // แสดง Dialog ที่บอกว่า "เช็คอินไปแล้ว"
+    } else {
+      _showCheckInDialog();
+    }
   }
 
   @override
