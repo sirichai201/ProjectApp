@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screen_login_user_all/login.dart';
 import '../screen_nisit/Profile_nisit.dart';
 import '../screen_nisit/history_nisit.dart';
 import '../screen_nisit/user_nisit.dart';
@@ -56,7 +57,7 @@ class DrawerBarNisit extends StatelessWidget {
             title: 'วิชาเรียน',
             icon: Icons.book,
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const UserNisit(),
@@ -71,7 +72,7 @@ class DrawerBarNisit extends StatelessWidget {
             title: 'ประวัติการเข้าเรียน',
             icon: Icons.history,
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HistoryNisit(),
@@ -87,7 +88,7 @@ class DrawerBarNisit extends StatelessWidget {
             title: 'profile_nisit',
             icon: Icons.manage_accounts,
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProfileNisitScreen(),
@@ -102,14 +103,12 @@ class DrawerBarNisit extends StatelessWidget {
             title: 'ออกจากระบบ',
             icon: Icons.exit_to_app,
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => LoginScreen(),
-              //   ),
-              // );
-              Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Login(),
+                ),
+              );
             },
           ),
           const SizedBox(

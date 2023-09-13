@@ -108,7 +108,7 @@ class Login extends StatelessWidget {
                   //   );
                   // }
                   // เปลี่ยนไปยังหน้าผู้ใช้งานที่กำลังจะสร้าง
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const UserNisit()),
                   );
