@@ -1,27 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/History_class_lecturer_screen.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/Profile_lecturer.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../login_User_All/login.dart';
+import '../gobal/drawerbar_nisit.dart';
 
-class EditProfile_lecturerScreen extends StatefulWidget {
+class EditProfileNisit extends StatefulWidget {
   final Map<String, dynamic> userData;
 
-  EditProfile_lecturerScreen({required this.userData});
+  EditProfileNisit({required this.userData});
 
   @override
-  _EditProfile_lecturerScreenState createState() =>
-      _EditProfile_lecturerScreenState();
+  _EditProfileNisitState createState() => _EditProfileNisitState();
 }
 
-class _EditProfile_lecturerScreenState
-    extends State<EditProfile_lecturerScreen> {
+class _EditProfileNisitState extends State<EditProfileNisit> {
   late TextEditingController _nameController;
   late TextEditingController _lastNameController;
   late TextEditingController _emailController;
@@ -65,7 +59,7 @@ class _EditProfile_lecturerScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      drawer: _buildDrawer(),
+      drawer: const DrawerBarNisit(),
       body: _buildBody(),
     );
   }
@@ -79,94 +73,6 @@ class _EditProfile_lecturerScreenState
           onPressed: _saveProfileChanges,
         ),
       ],
-    );
-  }
-
-  Drawer _buildDrawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          _buildDrawerHeader(),
-          SizedBox(height: 20),
-          ..._buildDrawerItems(),
-        ],
-      ),
-    );
-  }
-
-  DrawerHeader _buildDrawerHeader() {
-    return const DrawerHeader(
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 26, 107, 173),
-      ),
-      child: Center(
-        child: Text(
-          'เมนู',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _buildDrawerItems() {
-    return [
-      _buildDrawerItem(
-        title: 'วิชาเรียน',
-        icon: Icons.book,
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => User_lecturerScreen())),
-      ),
-      SizedBox(height: 20),
-      _buildDrawerItem(
-        title: 'ประวัติการเข้าเรียน',
-        icon: Icons.history,
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => History_class_lecturerScreen(
-                      subject: {},
-                    ))),
-      ),
-      SizedBox(height: 20),
-      _buildDrawerItem(
-        title: 'profile_lecturer',
-        icon: Icons.manage_accounts,
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Profile_lecturerScreen())),
-      ),
-      SizedBox(height: 20),
-      _buildDrawerItem(
-        title: 'ออกจากระบบ',
-        icon: Icons.exit_to_app,
-        onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())),
-      ),
-      SizedBox(height: 20),
-    ];
-  }
-
-  Widget _buildDrawerItem({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 2),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        onTap: onTap,
-      ),
     );
   }
 

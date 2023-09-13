@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_application_blockchain/screen_nisit/profile_nisit.dart';
+import 'package:flutter_application_blockchain/screen_nisit/user_nisit.dart';
 
-import '../login_User_All/login.dart';
-import 'Profile_nisit.dart';
-import 'User_nisit.dart';
+import '../screen_login_user_all/login.dart';
 
-class History_class_nisit_Screen extends StatefulWidget {
-  const History_class_nisit_Screen({super.key});
+class HistoryNisit extends StatefulWidget {
+  const HistoryNisit({super.key});
 
   @override
-  State<History_class_nisit_Screen> createState() =>
-      _History_class_nisit_ScreenState();
+  State<HistoryNisit> createState() => _HistoryNisitState();
 }
 
-class _History_class_nisit_ScreenState
-    extends State<History_class_nisit_Screen> {
+class _HistoryNisitState extends State<HistoryNisit> {
   @override
   Widget build(BuildContext context) {
     Widget _buildDrawerItem({
@@ -24,7 +22,8 @@ class _History_class_nisit_ScreenState
     }) {
       return Container(
         width: MediaQuery.of(context).size.width * 0.7,
-        margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+        margin:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
         decoration: BoxDecoration(
           border:
               Border.all(color: Colors.grey, width: 2), // กำหนดเส้นโครงของกรอบ
@@ -41,7 +40,7 @@ class _History_class_nisit_ScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('History_class_nisit_Screen'),
+        title: const Text('History_class_nisit_Screen'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -62,7 +61,7 @@ class _History_class_nisit_ScreenState
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _buildDrawerItem(
@@ -70,13 +69,11 @@ class _History_class_nisit_ScreenState
               icon: Icons.book,
               onTap: () {
                 // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'วิชาเรียน'
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserScreen_nisit()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const UserNisit()));
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _buildDrawerItem(
@@ -85,13 +82,12 @@ class _History_class_nisit_ScreenState
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => History_class_nisit_Screen()),
+                  MaterialPageRoute(builder: (context) => const HistoryNisit()),
                 );
                 // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _buildDrawerItem(
@@ -100,12 +96,11 @@ class _History_class_nisit_ScreenState
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => Profile_nisitScreen()),
+                  MaterialPageRoute(builder: (context) => ProfileNisitScreen()),
                 ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _buildDrawerItem(
@@ -114,11 +109,11 @@ class _History_class_nisit_ScreenState
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => Login()),
                 ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Add more ListTile items as needed

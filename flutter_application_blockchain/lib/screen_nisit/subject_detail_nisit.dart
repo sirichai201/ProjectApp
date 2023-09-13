@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
+import 'package:flutter_application_blockchain/gobal/drawerbar_nisit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
-import '../login_User_All/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Profile_nisit.dart';
-
-class SubjectDetail_nisitScreen extends StatefulWidget {
+class SubjectDetailNisit extends StatefulWidget {
   final Map<String, String> subject;
 
-  SubjectDetail_nisitScreen({required this.subject});
+  const SubjectDetailNisit({super.key, required this.subject});
 
   @override
-  _SubjectDetail_nisitScreenState createState() =>
-      _SubjectDetail_nisitScreenState();
+  _SubjectDetailNisitState createState() => _SubjectDetailNisitState();
 }
 
 class User {
@@ -32,7 +27,7 @@ class Subject {
   Subject({required this.name, required this.code});
 }
 
-class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
+class _SubjectDetailNisitState extends State<SubjectDetailNisit> {
   String locationName = 'มหาวิทยาลัยเกษตรศาสตร์ สกลนคร';
 
   double latitude = 13.7563;
@@ -42,18 +37,6 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
   String subjectName = '';
   String subjectCode = '';
   String checkInDate = ''; // เพิ่มตัวแปรเก็บวันที่เช็คชื่อ
-
-  Widget _buildDrawerItem({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      onTap: onTap,
-    );
-  }
 
   Future<void> _clearCheckInStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -105,7 +88,6 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
   void initState() {
     super.initState();
     final user = User(name: 'ชื่อของผู้ใช้');
-    final subject = Subject(name: 'ชื่อวิชา', code: 'รหัสวิชา');
     userName = user.name;
     subjectName = widget.subject['name'] ?? 'รายละเอียดรายวิชา';
     subjectCode = widget.subject['code'] ?? '';
@@ -133,28 +115,28 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
             ),
             markers: {
               Marker(
-                markerId: MarkerId('selected_location'),
+                markerId: const MarkerId('selected_location'),
                 position: LatLng(latitude, longitude),
               ),
             },
           ),
         ),
-        SizedBox(height: 10), // ระยะห่างระหว่างแผนที่กับข้อมูลด้านล่าง
+        const SizedBox(height: 10), // ระยะห่างระหว่างแผนที่กับข้อมูลด้านล่าง
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('ละติจูด: $latitude'),
-                  SizedBox(width: 20), // ระยะห่างระหว่าง Text
+                  const SizedBox(width: 20), // ระยะห่างระหว่าง Text
                   Text('ลองจิจูด: $longitude'),
                 ],
               ),
-              SizedBox(height: 10), // ระยะห่างระหว่างข้อมูลและกรอบ
+              const SizedBox(height: 10), // ระยะห่างระหว่างข้อมูลและกรอบ
               Container(
-                padding: EdgeInsets.all(8.0), // ระยะห่างรอบข้อความในกรอบ
+                padding: const EdgeInsets.all(8.0), // ระยะห่างรอบข้อความในกรอบ
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black), // สีขอบของกรอบ
                   borderRadius:
@@ -162,7 +144,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
                 ),
                 child: Text(
                   locationName, // ใช้ชื่อตำแหน่งที่เรากำหนด
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0, // ขนาดตัวอักษร
                   ),
                 ),
@@ -179,8 +161,9 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('คุณต้องการ Check-In หรือไม่?'),
-          content: Text('การ Check-In จะทำให้คุณได้รับรางวัล KU COIN +0.5'),
+          title: const Text('คุณต้องการ Check-In หรือไม่?'),
+          content:
+              const Text('การ Check-In จะทำให้คุณได้รับรางวัล KU COIN +0.5'),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -190,7 +173,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
               ),
-              child: Text('Check-In'),
+              child: const Text('Check-In'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -199,7 +182,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.red,
               ),
-              child: Text('ยกเลิก'),
+              child: const Text('ยกเลิก'),
             ),
           ],
         );
@@ -233,8 +216,8 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('คุณได้ Check-In แล้ว'),
-          content: Text('คุณได้รับรางวัล KU COIN +0.5'),
+          title: const Text('คุณได้ Check-In แล้ว'),
+          content: const Text('คุณได้รับรางวัล KU COIN +0.5'),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -244,7 +227,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
               ),
-              child: Text('ตกลง'),
+              child: const Text('ตกลง'),
             ),
           ],
         );
@@ -257,11 +240,11 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('เช็คอินแล้ว!'),
-          content: Text('คุณได้ทำการเช็คอินในวันนี้ไปแล้ว.'),
+          title: const Text('เช็คอินแล้ว!'),
+          content: const Text('คุณได้ทำการเช็คอินในวันนี้ไปแล้ว.'),
           actions: [
             TextButton(
-              child: Text('ตกลง'),
+              child: const Text('ตกลง'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -278,28 +261,28 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.green,
-          title: Text('คุณต้องการยืนยันการรับเหรียญ'),
+          title: const Text('คุณต้องการยืนยันการรับเหรียญ'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'ชื่อ: $userName',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               Text(
                 'วิชา: $subjectName ($subjectCode)',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.green,
                 ),
-                child: Text(
+                child: const Text(
                   'KU COIN +0.5',
                   style: TextStyle(
                     fontSize: 16.0,
@@ -318,7 +301,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
               ),
-              child: Text('ยืนยัน'),
+              child: const Text('ยืนยัน'),
             ),
           ],
         );
@@ -391,90 +374,12 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '$subjectName ($subjectCode)' ?? 'รายละเอียดรายวิชา',
+          '$subjectName ($subjectCode)',
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 26, 107, 173),
-              ),
-              child: Center(
-                child: Text(
-                  'เมนู',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'วิชาเรียน',
-              icon: Icons.book,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UserScreen_nisit()),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ประวัติการเข้าเรียน',
-              icon: Icons.history,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => History_class_nisit_Screen()),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'profile_nisit',
-              icon: Icons.manage_accounts,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Profile_nisitScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ออกจากระบบ',
-              icon: Icons.exit_to_app,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+      drawer: const DrawerBarNisit(),
       body: Padding(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -490,7 +395,7 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
                     height: 10,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   width: 200,
                   height: 50,
@@ -505,10 +410,10 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                     ),
-                    child: Text('Check In'),
+                    child: const Text('Check In'),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     _showDatePicker();
@@ -516,12 +421,12 @@ class _SubjectDetail_nisitScreenState extends State<SubjectDetail_nisitScreen> {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
                   ),
-                  child: Text('กำหนดวันที่เช็คชื่อ'),
+                  child: const Text('กำหนดวันที่เช็คชื่อ'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'วันที่เช็คชื่อล่าสุด: $checkInDate',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
