@@ -5,7 +5,6 @@ import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_
 import 'package:flutter_application_blockchain/screen_nisit/SubjectDetail_nisit_Screen.dart';
 
 import '../login_User_All/login.dart';
-import '../screen_lecturer/AttendanceHistoryScreen.dart';
 
 import 'Profile_nisit.dart';
 

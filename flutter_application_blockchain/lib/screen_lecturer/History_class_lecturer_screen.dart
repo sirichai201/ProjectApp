@@ -4,17 +4,18 @@ import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dar
 
 import '../login_User_All/login.dart';
 
-class AttendanceHistoryScreen extends StatefulWidget {
+class History_class_lecturerScreen extends StatefulWidget {
   final Map<String, String> subject;
 
-  AttendanceHistoryScreen({required this.subject});
+  History_class_lecturerScreen({required this.subject});
 
   @override
-  _AttendanceHistoryScreenState createState() =>
-      _AttendanceHistoryScreenState();
+  _History_class_lecturerScreenState createState() =>
+      _History_class_lecturerScreenState();
 }
 
-class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
+class _History_class_lecturerScreenState
+    extends State<History_class_lecturerScreen> {
   DateTime? selectedDate;
   String selectedDateText = "เลือกวันที่";
 

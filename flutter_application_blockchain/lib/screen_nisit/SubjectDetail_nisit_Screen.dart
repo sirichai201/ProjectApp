@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/AttendanceHistoryScreen.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
+
 import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 import '../login_User_All/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';

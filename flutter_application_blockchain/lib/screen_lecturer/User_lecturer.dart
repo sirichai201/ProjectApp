@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../login_User_All/login.dart';
-import 'AttendanceHistoryScreen.dart';
-import 'Profile.dart';
+import 'History_class_lecturer_screen.dart';
+import 'Profile_lecturer.dart';
 import 'SubjectDetail_lecturer_Screen.dart';
 
 class User_lecturerScreen extends StatefulWidget {
@@ -196,7 +196,7 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
+                      builder: (context) => History_class_lecturerScreen(
                             subject: {},
                           )),
                 );
@@ -212,7 +212,8 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => Profile_lecturerScreen()),
                 ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
               },
             ),

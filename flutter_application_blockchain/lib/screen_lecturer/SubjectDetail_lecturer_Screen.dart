@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/AttendanceHistoryScreen.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/History_class_lecturer_screen.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 
 import '../login_User_All/login.dart';
@@ -104,7 +104,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
+                      builder: (context) => History_class_lecturerScreen(
                             subject: {},
                           )),
                 );
