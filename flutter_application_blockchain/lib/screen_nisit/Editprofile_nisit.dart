@@ -240,15 +240,13 @@ class _EditProfile_nisitScreenState extends State<EditProfile_nisitScreen> {
   }
 
   void _saveProfileChanges() {
-    // สมมติว่าที่นี่คือโค้ดที่ทำการบันทึกข้อมูลลงในฐานข้อมูลหรือทำสิ่งอื่นๆ
-
     // ส่งข้อมูลที่ถูกแก้ไขกลับไปยังหน้า Profile_nisit.dart
     Navigator.pop(context, {
       'name': _nameController.text,
       'lastName': _lastNameController.text,
       'email': _emailController.text,
       'studentId': _studentIdController.text,
-      'selectedImage': _selectedImage
+      'selectedImage': _selectedImage // ส่งไฟล์รูปภาพกลับ
     });
   }
 }

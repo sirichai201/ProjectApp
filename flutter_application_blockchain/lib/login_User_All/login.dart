@@ -95,8 +95,7 @@ class LoginScreen extends StatelessWidget {
                   // เปลี่ยนไปยังหน้าผู้ใช้งานที่กำลังจะสร้าง
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => User_lecturerScreen()),
+                    MaterialPageRoute(builder: (context) => UserScreen_nisit()),
                   );
                 },
                 child: Container(

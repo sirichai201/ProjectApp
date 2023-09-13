@@ -11,9 +11,8 @@ class Profile_nisitScreen extends StatefulWidget {
 }
 
 class _Profile_nisitScreenState extends State<Profile_nisitScreen> {
-  File? _selectedImage;
+  File? _profileImage;
 
-  // ข้อมูลของนิสิต
   Map<String, dynamic> _nisitUserData = {
     'name': 'Sirichai',
     'lastName': 'chantharasri',
@@ -24,23 +23,19 @@ class _Profile_nisitScreenState extends State<Profile_nisitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile_nisit'),
-      ),
-      drawer: _buildDrawer(context),
+      appBar: AppBar(title: Text('Profile_nisit')),
+      drawer: _buildDrawer(),
       body: _buildProfileBody(),
     );
   }
 
-  Widget _buildDrawer(BuildContext context) {
+  Widget _buildDrawer() {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: <Widget>[
+        children: [
           const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 26, 107, 173),
-            ),
+            decoration: BoxDecoration(color: Color.fromARGB(255, 26, 107, 173)),
             child: Center(
               child: Text(
                 'เมนู',
@@ -107,48 +102,11 @@ class _Profile_nisitScreenState extends State<Profile_nisitScreen> {
       child: Column(
         children: [
           SizedBox(height: 25),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              CircleAvatar(
-                radius: 100,
-                backgroundImage:_selectedImage != null
-                ? Image.file(_selectedImage!).image
-
-                :AssetImage('assets/images/Profile.png'),
-              ),
-              Positioned(
-                bottom: 140,
-                right: 4,
-                child: InkWell(
-                  onTap: () async {
-                    final updatedData = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditProfile_nisitScreen(userData: _nisitUserData),
-                      ),
-                    );
-                    if (updatedData != null) {
-                      setState(() {
-                        _nisitUserData = updatedData;
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('แก้ไขสำเร็จ')),
-                      );
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey.withOpacity(0.8),
-                    ),
-                    child: Icon(Icons.edit, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
+          CircleAvatar(
+            radius: 100,
+            backgroundImage: _profileImage != null
+                ? Image.file(_profileImage!).image
+                : AssetImage('assets/images/Profile.png'),
           ),
           SizedBox(height: 25),
           Align(
@@ -203,28 +161,35 @@ class _Profile_nisitScreenState extends State<Profile_nisitScreen> {
           ),
           SizedBox(height: 25),
           ElevatedButton(
-            onPressed: () async {
-              final updatedData = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditProfile_nisitScreen(userData: _nisitUserData),
-                ),
-              );
-              if (updatedData != null) {
-                setState(() {
-                  _nisitUserData = updatedData;
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('แก้ไขสำเร็จ')),
-                );
-              }
-            },
+            onPressed: _navigateToEditProfile,
             child: Text('แก้ไขข้อมูล'),
           ),
           SizedBox(height: 15),
         ],
       ),
     );
+  }
+
+  Future<void> _navigateToEditProfile() async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfile_nisitScreen(userData: _nisitUserData),
+      ),
+    );
+
+    if (result is Map<String, dynamic>) {
+      setState(() {
+        _nisitUserData = result;
+
+        // ตรวจสอบว่ามี key 'selectedImage' ใน result หรือไม่
+        if (result.containsKey('selectedImage')) {
+          _profileImage = result['selectedImage'];
+        }
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('แก้ไขข้อมูลสำเร็จ')),
+      );
+    }
   }
 }
