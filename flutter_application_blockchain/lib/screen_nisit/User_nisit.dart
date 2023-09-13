@@ -5,7 +5,9 @@ import 'package:flutter_application_blockchain/gobal/drawerbar_nisit.dart';
 import 'subject_detail_nisit.dart';
 
 class UserNisit extends StatefulWidget {
-  const UserNisit({super.key});
+  const UserNisit({
+    super.key,
+  });
 
   @override
   _UserNisitState createState() => _UserNisitState();
@@ -135,7 +137,9 @@ class _UserNisitState extends State<UserNisit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User_nisit'),
+        title: Text("UserNisit"
+            // widget.nameFull ?? 'Name'
+            ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -151,7 +155,7 @@ class _UserNisitState extends State<UserNisit> {
           ),
         ],
       ),
-      drawer: const DrawerBarNisit(),
+      drawer: DrawerBarNisit(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

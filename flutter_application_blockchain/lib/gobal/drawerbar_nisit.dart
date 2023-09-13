@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screen_nisit/Profile_nisit.dart';
 import '../screen_nisit/history_nisit.dart';
+import '../screen_nisit/user_nisit.dart';
 
 class DrawerBarNisit extends StatelessWidget {
   const DrawerBarNisit({super.key});
@@ -55,7 +56,12 @@ class DrawerBarNisit extends StatelessWidget {
             title: 'วิชาเรียน',
             icon: Icons.book,
             onTap: () {
-              // Add your code here when clicking on 'วิชาเรียน'
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UserNisit(),
+                ),
+              ); // Add your code here when clicking on 'วิชาเรียน'
             },
           ),
           const SizedBox(
