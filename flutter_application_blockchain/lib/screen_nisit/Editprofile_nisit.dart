@@ -54,6 +54,7 @@ class _EditProfile_nisitScreenState extends State<EditProfile_nisitScreen> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String path = appDocDir.path;
     _selectedImage = await image.copy('$path/selectedImage.png');
+    print(_selectedImage);
     setState(() {});
   }
 
@@ -196,9 +197,9 @@ class _EditProfile_nisitScreenState extends State<EditProfile_nisitScreen> {
         children: [
           CircleAvatar(
             radius: 100,
-            backgroundImage: //_selectedImage != null
-                //? FileImage(_selectedImage!)
-                AssetImage('assets/images/Profile.png'),
+            backgroundImage: _selectedImage != null
+                ? Image.file(_selectedImage!).image
+                : AssetImage('assets/images/Profile.png'),
           ),
           Positioned(
             bottom: 140,

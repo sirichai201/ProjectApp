@@ -112,7 +112,10 @@ class _Profile_nisitScreenState extends State<Profile_nisitScreen> {
             children: [
               CircleAvatar(
                 radius: 100,
-                backgroundImage: AssetImage('assets/images/Profile.png'),
+                backgroundImage:_selectedImage != null
+                ? Image.file(_selectedImage!).image
+
+                :AssetImage('assets/images/Profile.png'),
               ),
               Positioned(
                 bottom: 140,
