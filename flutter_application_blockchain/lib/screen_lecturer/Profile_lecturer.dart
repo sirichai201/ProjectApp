@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_blockchain/screen_lecturer/EditProfile_lecturer.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/History_class_lecturer_screen.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
 import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
 import 'package:flutter_application_blockchain/screen_nisit/User_nisit.dart';
 import '../login_User_All/login.dart';
@@ -52,7 +54,7 @@ class _Profile_lecturerScreenState extends State<Profile_lecturerScreen> {
             icon: Icons.book,
             onTap: () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => UserScreen_nisit()),
+              MaterialPageRoute(builder: (context) => User_lecturerScreen()),
             ),
           ),
           _buildDrawerItem(
@@ -61,7 +63,9 @@ class _Profile_lecturerScreenState extends State<Profile_lecturerScreen> {
             onTap: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => History_class_nisit_Screen()),
+                  builder: (context) => History_class_lecturerScreen(
+                        subject: {},
+                      )),
             ),
           ),
           _buildDrawerItem(

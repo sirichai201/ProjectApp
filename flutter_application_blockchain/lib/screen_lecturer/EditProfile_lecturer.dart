@@ -134,7 +134,7 @@ class _EditProfile_lecturerScreenState
       ),
       SizedBox(height: 20),
       _buildDrawerItem(
-        title: 'profile_nisit',
+        title: 'profile_lecturer',
         icon: Icons.manage_accounts,
         onTap: () => Navigator.push(context,
             MaterialPageRoute(builder: (context) => Profile_lecturerScreen())),
