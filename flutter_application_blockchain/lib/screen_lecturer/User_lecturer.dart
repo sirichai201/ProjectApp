@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_blockchain/gobal/drawerbar_lecturer.dart';
 
-import '../login_User_All/login.dart';
-import 'AttendanceHistoryScreen.dart';
-import 'Profile.dart';
-import 'SubjectDetail_lecturer_Screen.dart';
+import 'subject_detail_lecturer.dart';
 
-class User_lecturerScreen extends StatefulWidget {
+class UserLecturer extends StatefulWidget {
   @override
-  _User_lecturerScreenState createState() => _User_lecturerScreenState();
+  _UserLecturerState createState() => _UserLecturerState();
 }
 
-class _User_lecturerScreenState extends State<User_lecturerScreen> {
+class _UserLecturerState extends State<UserLecturer> {
   List<Map<String, String>> subjects = [
     {'code': '000011111', 'name': 'วิชาAAA', 'group': '2'},
     {'code': '000011111', 'name': 'วิชาที่BBB', 'group': '1'},
@@ -23,42 +21,20 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("ยืนยันการลบ"),
-          content: Text("คุณต้องการลบรายวิชานี้ใช่หรือไม่?"),
+          title: const Text("ยืนยันการลบ"),
+          content: const Text("คุณต้องการลบรายวิชานี้ใช่หรือไม่?"),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text("ยกเลิก"),
+              child: const Text("ยกเลิก"),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text("ลบ"),
+              child: const Text("ลบ"),
             ),
           ],
         );
       },
-    );
-  }
-
-  Widget _buildDrawerItem({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
-      decoration: BoxDecoration(
-        border:
-            Border.all(color: Colors.grey, width: 2), // กำหนดเส้นโครงของกรอบ
-        borderRadius: BorderRadius.circular(
-            10.0), // กำหนดขอบเส้นโครงเป็นรูปสี่เหลี่ยมเหลี่ยม
-      ),
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        onTap: onTap,
-      ),
     );
   }
 
@@ -71,13 +47,13 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("เพิ่มรายการวิชาใหม่"),
+          title: const Text("เพิ่มรายการวิชาใหม่"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: codeController,
-                decoration: InputDecoration(labelText: "รหัสวิชา"),
+                decoration: const InputDecoration(labelText: "รหัสวิชา"),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[ก-๙a-zA-Z0-9]')),
@@ -85,7 +61,7 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
               ),
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: "ชื่อรายวิชา"),
+                decoration: const InputDecoration(labelText: "ชื่อรายวิชา"),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[ก-๙a-zA-Z0-9]')),
@@ -93,7 +69,7 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
               ),
               TextField(
                 controller: groupController,
-                decoration: InputDecoration(labelText: "หมู่เรียน"),
+                decoration: const InputDecoration(labelText: "หมู่เรียน"),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[ก-๙a-zA-Z0-9]')),
@@ -103,13 +79,13 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
           ),
           actions: [
             TextButton(
-              child: Text("ยกเลิก"),
+              child: const Text("ยกเลิก"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("เพิ่ม"),
+              child: const Text("เพิ่ม"),
               onPressed: () {
                 String newCode = codeController.text.trim();
                 String newName = nameController.text.trim();
@@ -125,7 +101,7 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
                   });
                   Navigator.of(context).pop();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text(
                         'กรุณากรอกรหัสวิชาและหมู่เรียนที่ไม่ซ้ำกันและไม่เป็นค่าว่าง'),
                   ));
@@ -147,99 +123,21 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User_lecturer'),
+        title: const Text('User_lecturer'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               _addSubject(); // สร้างฟังก์ชัน _addSubject() ที่จะถูกเรียกเมื่อกดปุ่ม
             },
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 26, 107, 173),
-              ),
-              child: Center(
-                child: Text(
-                  'เมนู',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'วิชาเรียน',
-              icon: Icons.book,
-              onTap: () {
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'วิชาเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ประวัติการเข้าเรียน',
-              icon: Icons.history,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AttendanceHistoryScreen(
-                            subject: {},
-                          )),
-                );
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'profile',
-              icon: Icons.manage_accounts,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ออกจากระบบ',
-              icon: Icons.exit_to_app,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            // Add more ListTile items as needed
-          ],
-        ),
-      ),
+      drawer: const DrawerbarLecturer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 80), // ระยะห่างระหว่างข้อความและรายวิชา
+          const SizedBox(height: 80), // ระยะห่างระหว่างข้อความและรายวิชา
           Expanded(
             child: ListView.builder(
               itemCount: subjects.length,
@@ -250,8 +148,7 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            SubjectDetailScreen(subject: subject),
+                        builder: (context) => SubjectDetail(subject: subject),
                       ),
                     );
                   },
@@ -263,40 +160,40 @@ class _User_lecturerScreenState extends State<User_lecturerScreen> {
                             top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
                         decoration: BoxDecoration(
                           color: Colors.grey[300], // สีเทาสำหรับกรอบรายวิชา
-                          borderRadius: BorderRadius.circular(60.0),
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               ' ${index + 1}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color:
                                     Colors.green, // สีเขียวสำหรับเลขลำดับวิชา
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 60.0),
+                            const SizedBox(width: 60.0),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'รหัสวิชา: ${subject['code']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18.0,
                                     ),
                                   ),
                                   Text(
                                     'ชื่อรายวิชา: ${subject['name']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20.0,
                                     ),
                                   ),
                                   Text(
                                     'หมู่เรียน: ${subject['group']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16.0,
                                     ),
                                   ),

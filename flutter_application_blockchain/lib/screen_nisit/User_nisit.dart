@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_blockchain/screen_nisit/History_class_nisit_Screen.dart';
+import 'package:flutter_application_blockchain/gobal/drawerbar_nisit.dart';
 
-import 'package:flutter_application_blockchain/screen_nisit/SubjectDetail_nisit_Screen.dart';
+import 'subject_detail_nisit.dart';
 
-import '../login_User_All/login.dart';
-import '../screen_lecturer/AttendanceHistoryScreen.dart';
+class UserNisit extends StatefulWidget {
+  const UserNisit({
+    super.key,
+  });
 
-import 'Profile_nisit.dart';
-
-class UserScreen_nisit extends StatefulWidget {
   @override
-  _UserScreen_nisitState createState() => _UserScreen_nisitState();
+  _UserNisitState createState() => _UserNisitState();
 }
 
-class _UserScreen_nisitState extends State<UserScreen_nisit> {
+class _UserNisitState extends State<UserNisit> {
   List<Map<String, String>> subjects = [
     {'code': '01111', 'name': 'วิชาAAA', 'group': '2'},
     {'code': '222', 'name': 'วิชาที่BBB', 'group': '1'},
@@ -28,40 +27,20 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("ยืนยันการลบ"),
-          content: Text("คุณต้องการลบรายวิชานี้ใช่หรือไม่?"),
+          title: const Text("ยืนยันการลบ"),
+          content: const Text("คุณต้องการลบรายวิชานี้ใช่หรือไม่?"),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text("ยกเลิก"),
+              child: const Text("ยกเลิก"),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text("ลบ"),
+              child: const Text("ลบ"),
             ),
           ],
         );
       },
-    );
-  }
-
-  Widget _buildDrawerItem({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 2),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        onTap: onTap,
-      ),
     );
   }
 
@@ -72,22 +51,23 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Join a Class"),
+          title: const Text("Join a Class"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 "You are currently signed in with email:",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(
+              const Text(
                 "sirichai.c@ku.th", // Replace with the user's email
                 style: TextStyle(color: Colors.blue),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: codeController,
-                decoration: InputDecoration(labelText: "Enter Class Code"),
+                decoration:
+                    const InputDecoration(labelText: "Enter Class Code"),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
@@ -97,13 +77,13 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
           ),
           actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: Text("Join Class"),
+              child: const Text("Join Class"),
               onPressed: () {
                 String classCode = codeController.text.trim();
                 // Check if class code is valid and join the class if needed
@@ -115,7 +95,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                   Navigator.of(context).pop();
                   _showJoinSuccessDialog(); // เรียกใช้ฟังก์ชันแสดงข้อความเมื่อสำเร็จ
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Invalid class code.'),
                   ));
                 }
@@ -132,11 +112,11 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Join Class Successful"),
-          content: Text("You have successfully joined the class!"),
+          title: const Text("Join Class Successful"),
+          content: const Text("You have successfully joined the class!"),
           actions: [
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -157,10 +137,12 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User_nisit'),
+        title: Text("UserNisit"
+            // widget.nameFull ?? 'Name'
+            ),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               if (joinedSubjectCode == null) {
                 _showJoinClassDialog();
@@ -173,91 +155,11 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 26, 107, 173),
-              ),
-              child: Center(
-                child: Text(
-                  'เมนู',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'วิชาเรียน',
-              icon: Icons.book,
-              onTap: () {
-                // Add your code here when clicking on 'วิชาเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ประวัติการเข้าเรียน',
-              icon: Icons.history,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => History_class_nisit_Screen(),
-                  ),
-                );
-                // Add your code here when clicking on 'ประวัติการเข้าเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'profile_nisit',
-              icon: Icons.manage_accounts,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Profile_nisitScreen(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ออกจากระบบ',
-              icon: Icons.exit_to_app,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerBarNisit(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           Expanded(
             child: ListView.builder(
               itemCount: subjects.length,
@@ -268,7 +170,7 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SubjectDetail_nisitScreen(
+                        builder: (context) => SubjectDetailNisit(
                           subject: subject,
                         ),
                       ),
@@ -289,32 +191,32 @@ class _UserScreen_nisitState extends State<UserScreen_nisit> {
                           children: [
                             Text(
                               ' ${index + 1}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.green,
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 60.0),
+                            const SizedBox(width: 60.0),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'รหัสวิชา: ${subject['code']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18.0,
                                     ),
                                   ),
                                   Text(
                                     'ชื่อรายวิชา: ${subject['name']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20.0,
                                     ),
                                   ),
                                   Text(
                                     'หมู่เรียน: ${subject['group']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16.0,
                                     ),
                                   ),

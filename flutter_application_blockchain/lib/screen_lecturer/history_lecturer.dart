@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_application_blockchain/screen_lecturer/User_lecturer.dart';
+import 'package:flutter_application_blockchain/gobal/drawerbar_lecturer.dart';
 
-import '../login_User_All/login.dart';
-
-class AttendanceHistoryScreen extends StatefulWidget {
+class HistoryLecturer extends StatefulWidget {
   final Map<String, String> subject;
 
-  AttendanceHistoryScreen({required this.subject});
+  HistoryLecturer({required this.subject});
 
   @override
-  _AttendanceHistoryScreenState createState() =>
-      _AttendanceHistoryScreenState();
+  _HistoryLecturerState createState() => _HistoryLecturerState();
 }
 
-class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
+class _HistoryLecturerState extends State<HistoryLecturer> {
   DateTime? selectedDate;
   String selectedDateText = "เลือกวันที่";
 
@@ -47,12 +44,12 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
 
   Widget _buildSearchBox() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
         onChanged: (query) => searchSubject(query),
         decoration: InputDecoration(
           hintText: 'ค้นหาวิชา...',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -63,10 +60,10 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
 
   Widget _buildSubjectList() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: filteredSubjectList.length,
         itemBuilder: (context, index) {
           final subject = filteredSubjectList[index];
@@ -89,7 +86,8 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
   }) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.7,
-      margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+      margin:
+          const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
       decoration: BoxDecoration(
         border:
             Border.all(color: Colors.grey, width: 2), // กำหนดเส้นโครงของกรอบ
@@ -108,73 +106,11 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ประวัติการเข้าเรียนของอาจารย์"),
+        title: const Text("ประวัติการเข้าเรียนของอาจารย์"),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 26, 107, 173),
-              ),
-              child: Center(
-                child: Text(
-                  'เมนู',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'วิชาเรียน',
-              icon: Icons.book,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => User_lecturerScreen()),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ประวัติการเข้าเรียน',
-              icon: Icons.history,
-              onTap: () {
-                // เพิ่มโค้ดที่คุณต้องการเมื่อคลิกที่เมนู 'ประวัติการเข้าเรียน'
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildDrawerItem(
-              title: 'ออกจากระบบ',
-              icon: Icons.exit_to_app,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                ); // ปิด Drawer เมื่อกดปุ่ม "ออก"
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            // Add more ListTile items as needed
-          ],
-        ),
-      ),
+      drawer: const DrawerbarLecturer(),
       body: Padding(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -194,20 +130,21 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.calendar_today),
-                          SizedBox(width: 15),
+                          const Icon(Icons.calendar_today),
+                          const SizedBox(width: 15),
                           Text(selectedDateText,
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
                   ),
                 ),
 
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
 
                 _buildSearchBox(), // เพิ่ม Search Box
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildSubjectList(), // เพิ่มรายการวิชาที่ค้นหา
 
                 const SizedBox(height: 30),
@@ -219,7 +156,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                     height: 10, // ระยะห่างระหว่าง SizedBox กับ PieChartWidget
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // กล่องรายชื่อคนที่มาเรียน ขาดเรียน และลา
                 Row(
@@ -229,12 +166,12 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                       width: 120, // เพิ่มขนาดกว้างของกล่อง DropdownButton
                       child: _buildDropdownButton("มาเรียน", Colors.green),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     SizedBox(
                       width: 120, // เพิ่มขนาดกว้างของกล่อง DropdownButton
                       child: _buildDropdownButton("ขาดเรียน", Colors.red),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     SizedBox(
                       width: 120, // เพิ่มขนาดกว้างของกล่อง DropdownButton
                       child: _buildDropdownButton("ลา", Colors.yellow),
@@ -242,7 +179,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                   ],
                 ),
 
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 // ส่วนแสดงรายชื่อนักเรียน (กราฟวงกลม)
                 PieChartWidget(),
               ],
@@ -280,11 +217,12 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                         : title == "ขาดเรียน"
                             ? Icons.cancel // กำหนด Icon สำหรับขาดเรียน
                             : Icons.hourglass_empty, // กำหนด Icon สำหรับลา
-                    color: Color.fromARGB(255, 19, 18, 18),
+                    color: const Color.fromARGB(255, 19, 18, 18),
                   ),
-                  SizedBox(width: 8), // ระยะห่างระหว่างไอคอนกับข้อความ
+                  const SizedBox(width: 8), // ระยะห่างระหว่างไอคอนกับข้อความ
                   Text(value,
-                      style: TextStyle(color: Color.fromARGB(255, 17, 17, 17))),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 17, 17, 17))),
                 ],
               ),
             );
@@ -297,8 +235,8 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
   // ฟังก์ชันเลือกวันที่
   Future<void> _selectDate(BuildContext context) async {
     DateTime? currentDate = DateTime.now();
-    DateTime? firstDate = currentDate.subtract(Duration(days: 365));
-    DateTime? lastDate = currentDate.add(Duration(days: 365));
+    DateTime? firstDate = currentDate.subtract(const Duration(days: 365));
+    DateTime? lastDate = currentDate.add(const Duration(days: 365));
 
     DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -330,7 +268,7 @@ class PieChartWidget extends StatelessWidget {
               value: 25,
               color: Colors.red,
               title: '25%',
-              titleStyle: TextStyle(
+              titleStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -340,7 +278,7 @@ class PieChartWidget extends StatelessWidget {
               value: 35,
               color: Colors.green,
               title: '35%',
-              titleStyle: TextStyle(
+              titleStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -350,7 +288,7 @@ class PieChartWidget extends StatelessWidget {
               value: 40,
               color: Colors.blue,
               title: '40%',
-              titleStyle: TextStyle(
+              titleStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

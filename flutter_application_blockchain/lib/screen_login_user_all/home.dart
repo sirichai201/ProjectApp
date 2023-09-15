@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../login_User_All/login.dart';
+import 'login.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: const Text('แอพเช็คชื่อ'),
+        title: const Center(
+          child: Text('แอพเช็คชื่อ'),
         ),
       ),
       body: Padding(
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   width: 209,
                   height: 300,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -55,13 +55,13 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
+          Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return LoginScreen();
+              return Login();
             },
           ));
         },
-        child: Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward),
         backgroundColor: Colors.red,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

@@ -1,29 +1,29 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_blockchain/gobal/drawerbar_nisit.dart';
+import 'package:flutter_application_blockchain/screen_lecturer/edit_profile_lecturer.dart';
 
-import 'edit_profile_nisit.dart';
+import '../gobal/drawerbar_lecturer.dart';
 
-class ProfileNisitScreen extends StatefulWidget {
+class ProfileLecturer extends StatefulWidget {
   @override
-  _ProfileNisitScreenState createState() => _ProfileNisitScreenState();
+  _ProfileLecturerState createState() => _ProfileLecturerState();
 }
 
-class _ProfileNisitScreenState extends State<ProfileNisitScreen> {
+class _ProfileLecturerState extends State<ProfileLecturer> {
   File? _profileImage;
 
-  Map<String, dynamic> _nisitUserData = {
-    'name': 'Sirichai',
-    'lastName': 'chantharasri',
-    'email': 'sirichai.c@ku.th',
-    'studentId': '63402050682222',
+  Map<String, dynamic> _lecturerUserData = {
+    'name': '5555',
+    'lastName': '4444',
+    'email': '55551',
+    'studentId': '611212',
   };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile_nisit')),
-      drawer: const DrawerBarNisit(),
+      appBar: AppBar(title: const Text('Profile_lecturer')),
+      drawer: const DrawerbarLecturer(),
       body: _buildProfileBody(),
     );
   }
@@ -37,7 +37,7 @@ class _ProfileNisitScreenState extends State<ProfileNisitScreen> {
             radius: 100,
             backgroundImage: _profileImage != null
                 ? Image.file(_profileImage!).image
-                : const AssetImage('assets/images/Profile.png'),
+                : AssetImage('assets/images/Profile.png'),
           ),
           const SizedBox(height: 25),
           const Align(
@@ -72,22 +72,22 @@ class _ProfileNisitScreenState extends State<ProfileNisitScreen> {
         children: [
           const SizedBox(height: 15),
           Text(
-            'ชื่อ: ${_nisitUserData['name']}',
+            'ชื่อ: ${_lecturerUserData['name']}',
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           Text(
-            'นามสกุล: ${_nisitUserData['lastName']}',
+            'นามสกุล: ${_lecturerUserData['lastName']}',
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           Text(
-            'Email: ${_nisitUserData['email']}',
+            'Email: ${_lecturerUserData['email']}',
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           Text(
-            'รหัสนิสิต: ${_nisitUserData['studentId']}',
+            'รหัสนิสิต: ${_lecturerUserData['studentId']}',
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 25),
@@ -105,13 +105,13 @@ class _ProfileNisitScreenState extends State<ProfileNisitScreen> {
     var result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditProfileNisit(userData: _nisitUserData),
+        builder: (context) => EditProfileLecturer(userData: _lecturerUserData),
       ),
     );
 
     if (result is Map<String, dynamic>) {
       setState(() {
-        _nisitUserData = result;
+        _lecturerUserData = result;
 
         // ตรวจสอบว่ามี key 'selectedImage' ใน result หรือไม่
         if (result.containsKey('selectedImage')) {
