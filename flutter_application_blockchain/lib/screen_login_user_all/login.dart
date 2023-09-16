@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+import '../screen_addmin/user_admin.dart';
+import '../screen_lecturer/User_lecturer.dart';
 import '../screen_nisit/User_nisit.dart';
 import 'forget_password.dart';
-import 'package:http/http.dart' as http;
-// นำเข้าหน้าผู้ใช้งานที่กำลังจะสร้าง
+import 'package:web3dart/web3dart.dart';
 
-// ignore: must_be_immutable
 class Login extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   Login({Key? key}) : super(key: key);
 
-  String username = "";
-  String password = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,91 +33,91 @@ class Login extends StatelessWidget {
               const SizedBox(height: 30.0),
               TextField(
                 controller: _usernameController,
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                ),
-                onChanged: (value) {
-                  username = value;
-                },
+                decoration: const InputDecoration(labelText: 'Username'),
               ),
               const SizedBox(height: 20.0),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                onChanged: (value) {
-                  password = value;
-                },
+                decoration: const InputDecoration(labelText: 'Password'),
               ),
               const SizedBox(height: 20.0),
-              GestureDetector(
-                onTap: () async {
-                  // String json = convert.jsonEncode(<String, dynamic>{
-                  //   "username": username,
-                  //   "password": password,
-                  // });
-                  // var url = Uri.http('192.168.1.12:3000', '/api/login', {});
+              Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: GestureDetector(
+                  onTap: () async {
+                    // Step 1: ตรวจสอบข้อมูลของ admin ก่อน
+                    if (_usernameController.text == "test00" &&
+                        _passwordController.text == "test00") {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => UserAdmin()));
+                      return;
+                    }
 
-                  // // Await the http get response, then decode the json-formatted response.
+                    // Step 2: ตรวจสอบผ่าน smart contract หากไม่ใช่ admin
+                    final http.Client httpClient = http.Client();
+                    final Web3Client client = Web3Client("", httpClient);
+                    final deployedContract = DeployedContract(
+                        ContractAbi.fromJson(''' ''', ""),
+                        EthereumAddress.fromHex(""));
 
-                  // var response = await http.post(url,
-                  //     headers: {"Content-Type": "application/json"},
-                  //     body: json);
-                  // if (response.statusCode == 200) {
-                  //   var jsonDecoded = convert.jsonDecode(response.body);
-                  //   var user = jsonDecoded['user'];
-                  //   String name = "";
-                  //   try {
-                  //     name = "${user['first_name']} ${user['last_name']}";
-                  //   } catch (err) {
-                  //     name = "catch";
-                  //   }
-                  //   // ignore: use_build_context_synchronously
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => UserNisit(
-                  //                 nameFull: name,
-                  //               )));
-                  // } else {
-                  //   // ignore: use_build_context_synchronously
-                  //   showDialog<void>(
-                  //     context: context,
-                  //     builder: (BuildContext context) {
-                  //       return AlertDialog(
-                  //         title: const Text('Error'),
-                  //         content: const Text("Login Error"),
-                  //         actions: <Widget>[
-                  //           TextButton(
-                  //             style: TextButton.styleFrom(
-                  //               textStyle:
-                  //                   Theme.of(context).textTheme.labelLarge,
-                  //             ),
-                  //             child: const Text('Close'),
-                  //             onPressed: () {
-                  //               Navigator.of(context).pop();
-                  //             },
-                  //           ),
-                  //         ],
-                  //       );
-                  //     },
-                  //   );
-                  // }
-                  // เปลี่ยนไปยังหน้าผู้ใช้งานที่กำลังจะสร้าง
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const UserNisit()),
-                  );
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                    final authenticateFunction =
+                        deployedContract.function("authenticate");
+                    try {
+                      final authResponse = await client.call(
+                        contract: deployedContract,
+                        function: authenticateFunction,
+                        params: [
+                          _usernameController.text,
+                          _passwordController.text
+                        ],
+                      );
+
+                      bool isAuthenticated = authResponse[0] as bool;
+
+                      if (isAuthenticated) {
+                        // Step 3: เรียก function checkUserRole
+                        final roleFunction =
+                            deployedContract.function("checkUserRole");
+                        final roleResponse = await client.call(
+                          contract: deployedContract,
+                          function: roleFunction,
+                          params: [_usernameController.text],
+                        );
+
+                        String role = roleResponse[0] as String;
+
+                        switch (role) {
+                          case "student":
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserNisit()));
+                            break;
+                          case "teacher":
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserLecturer()));
+                            break;
+                          default:
+                            _showDialog(context, 'Error', 'Invalid Role');
+                            break;
+                        }
+                      } else {
+                        _showDialog(
+                            context, 'Error', 'Invalid Username or Password');
+                      }
+                    } catch (e) {
+                      print("Error occurred: $e");
+                      _showDialog(context, 'Error', e.toString());
+                    }
+                  },
                   child: const Text(
                     'Login',
                     style: TextStyle(fontSize: 18),
@@ -142,6 +140,26 @@ class Login extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showDialog(BuildContext context, String title, String content) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

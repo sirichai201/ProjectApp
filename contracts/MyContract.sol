@@ -1,48 +1,44 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.22 <0.9.0;
+pragma solidity ^0.8.0;
 
-contract UniversityAuthentication {
-
-    // 1. การกำหนดบทบาท
-    enum Role { Student, Teacher, Admin }
-
-    // สร้างโครงสร้างสำหรับผู้ใช้ที่มีรหัสผ่านและบทบาท
+contract MyContractBlockchain {
     struct User {
-        string password;
-        Role role;
+        string username;    // username เข้าระบบ 
+        string password;  // รหัสผ่านสำหรับผู้ใช้
+        string role; // "student" or "teacher"
     }
-
-    // การสร้าง mapping ระหว่างชื่อผู้ใช้และข้อมูลผู้ใช้
-    mapping(string => User) users;
-
-    // ตัวแปรสำหรับเก็บ address ของแอดมิน
+    
+    mapping(string => User) public users;
     address public admin;
-
-    // Modifier ที่ใช้ตรวจสอบว่าผู้ที่ร้องขอเป็นแอดมินหรือไม่
+    string private adminUsername;
+    string private adminPassword;
+    
+     
+    
     modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can perform this action");
+        require(msg.sender == admin && keccak256(abi.encodePacked(adminUsername)) == keccak256(abi.encodePacked(adminUsername)) && keccak256(abi.encodePacked(adminPassword)) == keccak256(abi.encodePacked(adminPassword)), "Only admin can perform this action");
         _;
     }
-
-    // Constructor สำหรับกำหนดค่าเริ่มต้นของแอดมิน
-    constructor() {
-        admin = msg.sender;
+    
+    function authenticateAdmin(string memory _username, string memory _password) public view returns(bool) {
+        return keccak256(abi.encodePacked(_username)) == keccak256(abi.encodePacked(adminUsername)) && keccak256(abi.encodePacked(_password)) == keccak256(abi.encodePacked(adminPassword));
     }
+    
+    function createUser(string memory _username, string memory _password, string memory _role) public onlyAdmin {
+    require(bytes(users[_username].username).length == 0, "Username already exists");
+    users[_username] = User(_username, _password, _role);
+}
+    
+    function getUser(string memory _username) public view returns(User memory) {
+    return users[_username];
+}
 
-    // 2. ฟังก์ชันสำหรับสร้างบัญชีผู้ใช้
-    function createUser(string memory _username, string memory _password, Role _role) public onlyAdmin {
-        users[_username] = User(_password, _role);
-    }
 
-    // 3. ฟังก์ชันสำหรับเปลี่ยนรหัสผ่านของผู้ใช้
-    function changePassword(string memory _username, string memory _newPassword) public {
-        require(keccak256(abi.encodePacked(users[_username].password)) == keccak256(abi.encodePacked(_newPassword)), "Incorrect password");
-        users[_username].password = _newPassword;
-    }
+    function authenticate(string memory _username, string memory _password) public view returns(bool) {
+    return keccak256(abi.encodePacked(_password)) == keccak256(abi.encodePacked(users[_username].password));
+}
+    function checkUserRole(string memory _username) public view returns(string memory) {
+    return users[_username].role;
+}
 
-    // 4. ฟังก์ชันสำหรับเข้าสู่ระบบ
-    function login(string memory _username, string memory _password) public view returns (Role) {
-        require(keccak256(abi.encodePacked(users[_username].password)) == keccak256(abi.encodePacked(_password)), "Incorrect username or password");
-        return users[_username].role;
-    }
 }

@@ -45,6 +45,7 @@ dev_dependencies:
   path_provider: ^2.0.5  # โปรดตรวจสอบรุ่นล่าสุดใน pub.dev
   google_maps_flutter: ^2.0.9
   shared_preferences: ^2.0.8
+  web3dart: ^2.7.1
   http: ^1.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to

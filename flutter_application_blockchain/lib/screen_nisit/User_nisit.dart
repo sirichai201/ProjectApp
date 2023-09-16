@@ -138,7 +138,7 @@ class _UserNisitState extends State<UserNisit> {
     return Scaffold(
       appBar: AppBar(
         title: Text("UserNisit"
-            // widget.nameFull ?? 'Name'
+            //widget.nameFull ?? 'Name'
             ),
         actions: [
           IconButton(
